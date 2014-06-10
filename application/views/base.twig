@@ -1,0 +1,25 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+<head>
+	{% include '/head.twig' %}
+</head>
+<body>
+<div id="modal">
+	<div></div>
+</div>
+<div id="content" class="container">
+	{% block content %}
+		<div id="titleimg">
+			<a href="/main"><img src="/resources/graphics/offensive.gif" alt="[ this might be offensive ]" id="offensive" width="285" height="37" border="0"></a>
+		</div>
+	{% endblock %}
+</div>
+<div id="footer" >
+	{% block footer %}
+		&copy; Copyright 2014 by <a href="/">you</a>.
+	{% endblock %}
+</div>
+</body>
+</html>
+{% endspaceless %}

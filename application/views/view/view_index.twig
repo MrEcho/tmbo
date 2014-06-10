@@ -1,0 +1,16 @@
+{% extends ['base.twig'] %}
+
+{% block content %}
+	{{ parent() }}
+	<div id="leftcolum">
+		{% include '/main/main_sidebar.twig' %}
+	</div>
+	<div id="rightcolum">
+		<div class="contentbox">
+			<div class="blackbar"></div>
+			<div class="heading">heading</div>
+			<div class="bluebox">bluebox</div>
+			<div class="blackbar"></div>
+		</div>
+	</div>
+{% endblock %}

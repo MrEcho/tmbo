@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% include 'head.twig' %}
+	<style> *{ font-size: 10px} a{ color: blue} </style>
+</head>
+<body style="background: white;">
+	<div id="modal"><div></div></div>
+	<div class="view_img_blackbar">Stuff said here</div>
+	<div style="margin: 1em;">
+		<div>
+			<div class="img_view_link_next">
+				{% if data.next.id is defined %}
+					<a href="/view/image/{{ data.next.id }}" title="{{ data.next.hover }}">newer</a>
+				{% else %}
+					&nbsp;
+				{% endif %}
+			</div>
+			<div class="img_view_link_index">&nbsp;.&nbsp;<a href="/main">index</a>&nbsp;.&nbsp;</div>
+			<div class="img_view_link_older">
+				{% if data.prev.id is defined %}
+					<a href="/view/image/{{ data.prev.id }}" title="{{ data.prev.hover }}">older</a>
+				{% else %}
+					&nbsp;
+				{% endif %}
+			</div>
+
+			<div>
+				<div id="vote_data" data-id="{{ data.file.id }}" data-session="{{ sessionid }}" data-hasvoted="{{ data.file.hasvoted }}" style="width: 200px; float: left">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="/discussions/image/{{ data.file.id }}">comments</a>
+					(
+					<span id="vote_text">{{ data.file.comments.text }}</span>c
+					+<span id="vote_tig">{{ data.file.comments.tig }}</span>
+					-<span id="vote_tib">{{ data.file.comments.tib }}</span>
+					)
+					(<a href="#">quick</a>)
+				</div>
+
+				vote: <a href="#" id="button_vote_tig">[ this is good ]</a> . <a href="#" id="button_vote_tib">[ this is bad ]</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#" id="button_subscribe">subscribe</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; filters: <a href="#">nsfw(off)</a> <a href="#">tmbo(off)</a>
+			</div>
+
+		</div>
+		<br>
+		<br>
+		<div>
+			{%  if data.file.tmbo == 1 %}
+				<span style="color: red">[tmbo]</span>{# need to add a pref link #}
+			{% endif %}
+			{%  if data.file.nsfw == 1 %}
+				<span style="color: red">[nsfw]</span>
+			{% endif %}
+			<a class="img_link" href="/uploads/{{ data.file.datepath  }}/image/{{ data.file.id }}_{{ data.file.filename }}">
+				{{ data.file.filename|e }}
+			</a>
+			{{ data.file.metadata.file_size }} KB, {{ data.file.metadata.image_width }}x{{  data.file.metadata.image_height }}
+		</div>
+		<div>
+			<img
+					style="max-height: 99%; max-width: 99%; background: #DCDCDC; padding: 1em;"
+					id="imgtag"
+					{# https://api.jquery.com/data/ #}
+					data-image-id="{{ data.file.id }}"
+					data-image-width="{{ data.file.metadata.image_width }}"
+					data-image-height="{{ data.file.metadata.image_height }}"
+					src="/uploads/{{ data.file.datepath  }}/image/{{ data.file.id }}_{{ data.file.filename }}">
+		</div>
+		<br>
+		<div>
+			<table>
+				<tbody>
+				{% if data.file.metadata is defined %}
+					{% if data.file.metadata.make is not empty %}        <tr><td>Make</td>    <td>{{ data.file.metadata.make }}</td></tr> {% endif %}
+					{% if data.file.metadata.model is not empty %}       <tr><td>Model</td>   <td>{{ data.file.metadata.model }}</td></tr> {% endif %}
+					{% if data.file.metadata.lens is not empty %}        <tr><td>Lens</td>    <td>{{ data.file.metadata.lens }}</td></tr> {% endif %}
+					{% if data.file.metadata.aperture is not empty %}    <tr><td>Aperture</td><td>{{ data.file.metadata.aperture }}</td></tr> {% endif %}
+					{% if data.file.metadata.exposure is not empty %}    <tr><td>Exposure</td><td>{{ data.file.metadata.exposure }}</td></tr> {% endif %}
+					{% if data.file.metadata.iso is not empty %}         <tr><td>ISO</td>     <td>{{ data.file.metadata.iso }}</td></tr> {% endif %}
+					{% if data.file.metadata.focallength is not empty %} <tr><td>Focal Length</td><td>{{ data.file.metadata.focallength }}</td></tr> {% endif %}
+				{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</body>
+</html>

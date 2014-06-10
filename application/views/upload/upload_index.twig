@@ -1,0 +1,45 @@
+{% extends ['base.twig', '/main/main_sidebar.twig'] %}
+
+{% block content %}
+	{{ parent() }}
+	<div id="leftcolum">
+		{% include '/main/main_sidebar.twig' %}
+	</div>
+	<div id="rightcolum">
+		<div class="contentbox">
+			<div class="blackbar"></div>
+			<div class="heading">heading</div>
+			<div class="bluebox">
+				<div style="text-align:center">
+					<p>If you haven't already, please take a look at <a href="/faq">the rules</a> before uploading.</p>
+
+					<form method="post" action="/uploadfile/do_upload" enctype="multipart/form-data">
+						<table border="0" cellpadding="4" cellspacing="0" style="text-align:left;margin-left:auto;margin-right:auto">
+							<tbody><tr>
+								<td style="text-align:right"><label for="rawfile">file:</label></td>
+								<td><input type="file" name="rawfile" id="rawfile"></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="checkbox" id="nsfw" name="nsfw" value="1"><label for="nsfw">[ nsfw ]</label></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type="checkbox" id="tmbo" name="tmbo" value="1"><label for="tmbo">[ this might be offensive ]</label></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<input type="submit" value="upload">
+								</td>
+							</tr>
+							</tbody></table>
+
+					</form>
+
+				</div>
+			</div>
+			<div class="blackbar"></div>
+		</div>
+	</div>
+{% endblock %}

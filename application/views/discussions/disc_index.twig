@@ -1,0 +1,56 @@
+{% extends ['base.twig'] %}
+
+{% block content %}
+	{{ parent() }}
+	<div id="leftcolum">
+		{% include '/main/main_sidebar.twig' %}
+	</div>
+	<div id="rightcolum">
+		<div class="contentbox">
+			<div class="blackbar"></div>
+			<div class="heading" style="margin: 0; padding: 0">
+				<div class="heading_title">something said here</div>
+				<div id="tabbar">
+					<div class="taboff"><a href="/main">images</a></div>
+					<div class="tabon"><a href="/discussions">discussions</a></div>
+					<div class="taboff"><a href="/hof">hall of fame</a></div>
+					<div class="taboff"><a href="/audio">audio</a></div>
+					<div class="taboff"><a href="/yearbook">yearbook</a></div>
+					<div class="taboff"><a href="/search">search</a></div>
+					<div style="clear: both; margin: 0; padding: 0"></div>
+				</div>
+			</div>
+
+			<div class="bluebox" style="overflow:auto;">
+
+			<div><a href="/discussions/newtopic">new topic</a></div>
+			<br>
+
+				{% if data.posts is defined %}
+					<div class="post_odd">
+						<div class="disc_table_left">creation date &#9650; &#9660;</div>
+						{# yes its backwords, float right #}
+						<div class="disc_table_right">last post &#9650; &#9660;</div>
+						<div class="disc_table_center">count &#9650; &#9660;</div>
+					</div>
+					<br>
+					{% for post in data.posts  %}
+						<div class="post_{{ cycle(['odd', 'even'], loop.index0) }}">
+							<div class="disc_table_left">
+								<a href="/discussions/topic/{{ post.id }}">{{ post.filename|e|slice(0,75) }}</a>
+							</div>
+							{# yes its backwords, float right #}
+							<div class="disc_table_right">{{ post.oldist.timestamp }}</div>
+							<div class="disc_table_center">({{ post.comments.text }} comments)</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					wtf.. that was odd..
+				{% endif %}
+
+			</div>{# end of bluebox#}
+
+			<div class="blackbar"></div>
+		</div>
+	</div>
+{% endblock %}

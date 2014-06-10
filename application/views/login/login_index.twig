@@ -1,0 +1,17 @@
+{% extends "base.twig" %}
+
+{% block content %}
+	<div style="padding-top: 5em; text-align: center">
+		<form role="form" id="loginform" method="post" action="/login/submit">
+			<div>
+				<label for="nickname">Name</label>
+				<input type="text" id="nickname" name="nickname" placeholder="Enter a Nickname" value="moo">
+			</div>
+			<div>
+				<label for="password">Password</label>
+				<input  type="password" id="password" name="password" value="moo">
+			</div>
+			<button type="submit" id="loginformsubmit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+{% endblock %}

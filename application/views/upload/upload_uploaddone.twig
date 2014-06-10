@@ -1,0 +1,40 @@
+{% extends ['base.twig', '/main/main_sidebar.twig'] %}
+
+{% block content %}
+	{{ parent() }}
+	<div id="leftcolum">
+		{% include '/main/main_sidebar.twig' %}
+	</div>
+	<div id="rightcolum">
+		<div class="contentbox">
+			<div class="blackbar"></div>
+			<div class="heading">File Upload:</div>
+			<div class="bluebox">
+				<p>
+					Upload done...
+					<br>
+					View it <a href="/view/{{ upload.type }}/{{ upload.file_id }}"> HERE </a>
+				</p>
+				<p>
+					<table>
+					<thead><tr><td>Attribute</td><td>Value</td></tr></thead>
+					<tbody>
+					{% if upload.data.exif is defined %}
+						<tr><td>Make</td>    <td>{{ upload.data.exif.make }}</td></tr>
+						<tr><td>Model</td>   <td>{{ upload.data.exif.model }}</td></tr>
+						<tr><td>Lens</td>    <td>{{ upload.data.exif.lens }}</td></tr>
+						<tr><td>Width</td>   <td>{{ upload.data.exif.image_width }}</td></tr>
+						<tr><td>Height</td>  <td>{{ upload.data.exif.image_height }}</td></tr>
+						<tr><td>Aperture</td><td>{{ upload.data.exif.aperture }}</td></tr>
+						<tr><td>Exposure</td><td>{{ upload.data.exif.exposure }}</td></tr>
+						<tr><td>ISO</td>     <td>{{ upload.data.exif.iso }}</td></tr>
+						<tr><td>Focal Length</td><td>{{ upload.data.exif.focallength }}</td></tr>
+					{% endif %}
+					</tbody>
+					</table>
+				</p>
+			</div>
+			<div class="blackbar"></div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends ['base.twig'] %}
+
+{% block content %}
+	{{ parent() }}
+	<div id="leftcolum">
+		{% include '/main/main_sidebar.twig' %}
+	</div>
+	<div id="rightcolum">
+		<div class="contentbox">
+			<div class="blackbar"></div>
+			<div class="heading" style="margin: 0; padding: 0">
+				<div class="heading_title">something said here</div>
+				<div id="tabbar">
+					<div class="taboff"><a href="/main">images</a></div>
+					<div class="tabon"><a href="/discussions">discussions</a></div>
+					<div class="taboff"><a href="/hof">hall of fame</a></div>
+					<div class="taboff"><a href="/audio">audio</a></div>
+					<div class="taboff"><a href="/yearbook">yearbook</a></div>
+					<div class="taboff"><a href="/search">search</a></div>
+					<div style="clear: both; margin: 0; padding: 0"></div>
+				</div>
+			</div>
+
+			<div class="bluebox" style="overflow:auto;">
+
+				<div class="disc--divider-bar">
+					<a href="/view/image/{{ data.post.id }}">
+						{% if data.post.tmbo == 1 %}
+							[tmbo]
+						{% endif %}
+						{% if data.post.nsfw == 1 %}
+							[nsfw]
+						{% endif %}
+						{{ data.post.filename|e|slice(0,75) }}
+					</a>
+					<span style="float: right">subscribe</span>
+				</div>
+				<div>the dorks who came before you said:</div>
+				<br>
+				{% if data.posts is defined %}
+					{% for post in data.posts %}
+						<div class="post_{{ cycle(['odd', 'even'], loop.index0) }} entry">
+							<a name="{{ post.id }}"></a>
+
+							<div>{{ post.comment|escape }}</div>
+							<div>
+								<div style="float: left">»
+									{{ post.userid }}
+									{% if post.tig == 1 %}
+										[this is good]
+									{% endif %}
+									{% if post.tib == 1 %}
+										[this is bad]
+									{% endif %}
+									{% if post.repost == 1 %}
+										[this is a repost]
+									{% endif %}
+									{% if post.offensive == 1 %}
+										[this is offensive]
+									{% endif %}
+								</div>
+								<div style="float: right"> {{ post.timestamp }} </div>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					wtf.. that was odd..
+				{% endif %}
+
+				<div class="disc--divider-bar">
+					<a href="/view/image/{{ data.post.id }}">
+						{% if data.post.tmbo == 1 %}
+							[tmbo]
+						{% endif %}
+						{% if data.post.nsfw == 1 %}
+							[nsfw]
+						{% endif %}
+						{{ data.post.filename|e|slice(0,75) }}
+					</a>
+					<span style="float: right">subscribe</span>
+				</div>
+
+				<div style="float: left">
+					<img src="/uploads/{{ data.post.datepath  }}/image/thumbs/th{{ data.post.id }}{{ data.post.metadata.file_ext }}">
+				</div>
+				<div style="float: left; padding-left: 3em;">
+					<table>
+						<tbody>
+						{% if data.post.metadata is defined %}
+							{% if data.post.metadata.make is not empty %}        <tr><td>Make</td>    <td>{{ data.post.metadata.make }}</td></tr> {% endif %}
+							{% if data.post.metadata.model is not empty %}       <tr><td>Model</td>   <td>{{ data.post.metadata.model }}</td></tr> {% endif %}
+							{% if data.post.metadata.lens is not empty %}        <tr><td>Lens</td>    <td>{{ data.post.metadata.lens }}</td></tr> {% endif %}
+							{% if data.post.metadata.aperture is not empty %}    <tr><td>Aperture</td><td>{{ data.post.metadata.aperture }}</td></tr> {% endif %}
+							{% if data.post.metadata.exposure is not empty %}    <tr><td>Exposure</td><td>{{ data.post.metadata.exposure }}</td></tr> {% endif %}
+							{% if data.post.metadata.iso is not empty %}         <tr><td>ISO</td>     <td>{{ data.post.metadata.iso }}</td></tr> {% endif %}
+							{% if data.post.metadata.focallength is not empty %} <tr><td>Focal Length</td><td>{{ data.post.metadata.focallength }}</td></tr> {% endif %}
+						{% endif %}
+						</tbody>
+					</table>
+				</div>
+
+			</div>{# end of bluebox#}
+
+			<div class="blackbar"></div>
+		</div>
+
+		<div class="contentbox">
+			<div class="blackbar"></div>
+			<div class="heading">and then you came along and were all:</div>
+			<div class="bluebox">
+				<form method="post" action="/discussions/post" enctype="multipart/form-data">
+					<input type="hidden" name="fileid" value="{{ data.post.id }}">
+					<input type="hidden" name="type" value="{{ data.post.type }}">
+					<textarea style="width: 100%" rows="12" name="comment"></textarea>
+
+					{% if data.post.hasvoted == 0 %}
+					<div style="text-align:left;margin-left:2em;" id="vote_controls">
+						<input type="radio" id="novote" checked="checked" value="novote" name="vote">
+						<label for="novote">no vote</label>
+						<br>
+						<input type="radio" id="this_is_good" value="this is good" name="vote">
+						<label for="this_is_good">[ this is good ]</label><br>
+						<input type="radio" id="this_is_bad" value="this is bad" name="vote">
+						<label for="this_is_bad">[ this is bad ]</label><br>
+						<br>
+						<input type="checkbox" id="tmbo" value="omg" name="offensive">
+						<label for="tmbo">[ this might be offensive ]</label><br>
+						<input type="checkbox" id="repost" value="police" name="repost">
+						<label for="repost">[ this is a repost ]</label><br>
+						<br>
+						<input type="checkbox" id="subscribe" value="subscribe" name="subscribe">
+						<label for="subscribe">[ subscribe ]</label><br>
+					</div>
+					{%  endif %}
+					<div style="text-align: center"><input type="submit" value="GO"></div>
+
+				</form>
+			</div>
+			<div class="blackbar"></div>
+		</div>
+
+
+	</div>
+{% endblock %}

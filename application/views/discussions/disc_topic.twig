@@ -1,0 +1,63 @@
+{% extends ['base.twig'] %}
+
+{% block content %}
+	{{ parent() }}
+	<div id="leftcolum">
+		{% include '/main/main_sidebar.twig' %}
+	</div>
+	<div id="rightcolum">
+		<div class="contentbox">
+			<div class="blackbar"></div>
+			<div class="heading" style="margin: 0; padding: 0">
+				<div class="heading_title">something said here</div>
+				<div id="tabbar">
+					<div class="taboff"><a href="/main">images</a></div>
+					<div class="tabon"><a href="/discussions">discussions</a></div>
+					<div class="taboff"><a href="/hof">hall of fame</a></div>
+					<div class="taboff"><a href="/audio">audio</a></div>
+					<div class="taboff"><a href="/yearbook">yearbook</a></div>
+					<div class="taboff"><a href="/search">search</a></div>
+					<div style="clear: both; margin: 0; padding: 0"></div>
+				</div>
+			</div>
+
+			<div class="bluebox" style="overflow:auto;">
+
+				{% if data.posts is defined %}
+					{% for post in data.posts %}
+						<div class="post_{{ cycle(['odd', 'even'], loop.index0) }} entry">
+							<a name="{{ post.id }}"></a>
+
+							<div>{{ post.comment|escape }}</div>
+							<div>
+								<div style="float: left">» {{ post.userid }}</div>
+								<div style="float: right">{{ post.timestamp }}</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					wtf.. that was odd..
+				{% endif %}
+
+			</div>{# end of bluebox#}
+
+			<div class="blackbar"></div>
+		</div>
+
+
+		<div class="contentbox">
+			<div class="blackbar"></div>
+			<div class="heading">and then you came along and were all:</div>
+			<div class="bluebox">
+				<form method="post" action="/discussions/post" enctype="multipart/form-data">
+					<input type="hidden" name="fileid" value="{{ data.post.id }}">
+					<input type="hidden" name="type" value="{{ data.post.type }}">
+					<textarea style="width: 100%" rows="12" name="comment"></textarea>
+					<div style="text-align: center"><input type="submit" value="GO"></div>
+				</form>
+			</div>
+			<div class="blackbar"></div>
+		</div>
+
+	</div>
+{% endblock %}
